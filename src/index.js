@@ -6,6 +6,8 @@ module.exports = function(config) {
     LOGS_TOKEN: process.env.LOGENTRIES_TOKEN
   }, config);
 
-  require('./bugsnag')(config.BUGS_TOKEN);
-  require('./winston')(config.LOGS_TOKEN);
+  return {
+    notifier: require('./bugsnag')(config.BUGS_TOKEN),
+    logger: require('./winston')(config.LOGS_TOKEN)
+  };
 };
