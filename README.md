@@ -22,6 +22,16 @@ require('@dialonce/boot')({
 });
 ```
 
+## Using logger/reporter
+You can use the logger/reporter directly from the module, without including the deps in your project. This will allow us to update/switch providers easily.
+
+```js
+const logger = require('@dialonce/boot')().logger;
+const notifier = require('@dialonce/boot')().notifier;
+```
+
+*Please note that these instructions will print an error if the module has not been initialised before*
+
 ## Current included modules
   - Bugsnag (bug reports)
   - Logentries (logs)
