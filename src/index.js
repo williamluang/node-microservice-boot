@@ -36,9 +36,10 @@ module.exports = (config) => {
   // stores the cached required modules for the next requires on @dialonce/boot
   /* eslint-disable global-require */
   initModule = {
-    notifier: require('./bugsnag')(config.BUGS_TOKEN),
-    logger: require('./winston')(config.LOGS_TOKEN)
+    notifier: require('./bugsnag')(config.BUGS_TOKEN)
   };
+
+  initModule.logger = require('./winston')(initModule.notifier, config.LOGS_TOKEN, config.NOTIFY);
 
   return initModule;
 };
