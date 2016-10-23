@@ -14,15 +14,14 @@ let initModule = false;
  * @param  {string} [config.LOGS_TOKEN] Token used by internal logger to send logs to
  * @return {Object}        The configured providers
  */
-module.exports = function(config) {
-  //if no param is provided, we want to return the cached modules
+module.exports = (config) => {
+  // if no param is provided, we want to return the cached modules
   if (!config) {
-    //this should always be true when user require the module and have it initialised, else we print an error
-    if (initModule) {
-      return initModule;
-    } else {
-      console.error('Dial Once boot module should be initilised before used without config.');
-    }
+    // this should always be true when user require the module and have it initialised, else we print an error
+    if (initModule) return initModule;
+
+    /* eslint-disable no-console, no-param-reassign */
+    console.error('Dial Once boot module should be initilised before used without config.');
   }
 
   /**
@@ -34,7 +33,8 @@ module.exports = function(config) {
     LOGS_TOKEN: process.env.LOGENTRIES_TOKEN
   }, config);
 
-  //stores the cached required modules for the next requires on @dialonce/boot
+  // stores the cached required modules for the next requires on @dialonce/boot
+  /* eslint-disable global-require */
   initModule = {
     notifier: require('./bugsnag')(config.BUGS_TOKEN),
     logger: require('./winston')(config.LOGS_TOKEN)
