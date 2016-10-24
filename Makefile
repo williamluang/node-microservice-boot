@@ -1,9 +1,10 @@
 .PHONY: test
 deps:
-	npm i -g jshint istanbul mocha
+	npm install -g eslint mocha istanbul
+	npm install -g eslint-config-airbnb eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-react
 	npm i
 lint:
-	jshint .
+	eslint .
 test:
 	make lint
 	make cover

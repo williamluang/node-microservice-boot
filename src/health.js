@@ -1,10 +1,10 @@
-var winston = require('winston'),
-  startDate = new Date();
+const winston = require('winston');
 
 /*
  * Print health status every minute, and keep module alive
  */
-module.exports = function() {
+module.exports = () => {
+  const startDate = new Date();
   winston.info(process.env.HOSTNAME, {
     status: 'running',
     startedAt: startDate,
@@ -12,4 +12,4 @@ module.exports = function() {
   });
 };
 
-setInterval(module.exports, 60*1000);
+setInterval(module.exports, 60 * 1000);

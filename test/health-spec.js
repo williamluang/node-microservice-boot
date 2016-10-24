@@ -1,12 +1,12 @@
-var assert = require('assert'),
-  health = require('../src/health');
+const assert = require('assert');
+const health = require('../src/health');
 
-describe('health', function() {
-  it('should expose a function', function() {
+describe('health', () => {
+  it('should expose a function', () => {
     assert.equal(typeof health, 'function');
   });
 
-  it('should be able to call the function without throwing an error', function() {
+  it('should be able to call the function without throwing an error', () => {
     health();
   });
 });
