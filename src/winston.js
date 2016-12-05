@@ -6,6 +6,8 @@
 require('le_node');
 const winston = require('winston');
 
+const loggers = {};
+
 module.exports = (notifier, token, notify = true) => {
   // we do not want console transport in production, because it reduce performances
   if (process.env.CONSOLE_LOGGING === 'false') {
@@ -13,13 +15,16 @@ module.exports = (notifier, token, notify = true) => {
   }
 
   if (token) {
-    const logger = winston.add(winston.transports.Logentries, { token });
-
+    let logger;
+    if (!(token in loggers)) {
+      logger = winston.add(winston.transports.Logentries, { token });
+      loggers[token] = logger;
+    } else {
+      logger = loggers[token];
+    }
     logger.rewriters.push((level, msg, meta) => {
       const newMeta = Object.assign({}, meta);
-
       newMeta.instanceId = process.env.HOSTNAME;
-
       newMeta.notify = (typeof newMeta.notify === 'boolean') ? newMeta.notify : notify;
       if (['error', 'warn'].indexOf(level) !== -1 && newMeta.notify) {
         notifier.notify(msg);
@@ -29,7 +34,6 @@ module.exports = (notifier, token, notify = true) => {
 
       return newMeta;
     });
-
     return logger;
   }
 
