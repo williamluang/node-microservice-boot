@@ -1,11 +1,10 @@
 .PHONY: test
 
 deps:
-	npm install -g mocha istanbul
 	npm i
 
 lint:
-	./node_modules/.bin/eslint .
+	node_modules/.bin/eslint .
 
 test:
 	make lint
@@ -17,7 +16,7 @@ init:
 	sed -i 's/{service-name}/$(NAME)/g' sonar-project.properties
 
 cover:
-	istanbul cover _mocha -- test --recursive --timeout=10000
+	node_modules/.bin/istanbul cover  node_modules/.bin/_mocha -- test --recursive --timeout=10000
 
 sonar:
 	sed '/sonar.projectVersion/d' ./sonar-project.properties > tmp && mv tmp sonar-project.properties
