@@ -1,12 +1,11 @@
 .PHONY: test
 
 deps:
-	npm install -g eslint mocha istanbul
-	npm install -g eslint-config-airbnb eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-react
+	npm install -g mocha istanbul
 	npm i
 
 lint:
-	eslint .
+	./node_modules/.bin/eslint .
 
 test:
 	make lint
