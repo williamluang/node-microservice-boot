@@ -23,7 +23,7 @@ module.exports = (notifier, token, notify = true) => {
       logger = loggers[token];
     }
     logger.rewriters.push((level, msg, meta) => {
-      const newMeta = Object.assign({}, meta);
+      const newMeta = Object.assign({}, meta instanceof Error ? { stack: meta.stack, message: meta.message } : meta);
       newMeta.instanceId = process.env.HOSTNAME;
       newMeta.notify = (typeof newMeta.notify === 'boolean') ? newMeta.notify : notify;
       if (['error', 'warn'].indexOf(level) !== -1 && newMeta.notify) {
